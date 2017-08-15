@@ -9,6 +9,8 @@ Rails.application.configure do
   # and those relying on copy on write to perform better.
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.default_url_options = { :host => 'ia-esds.herokuapp.com', :protocol => 'https'}
 
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
@@ -76,4 +78,21 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+  
+  #Gmail from Heroku for testing emails during development 
+  config.action_mailer.default_url_options = { :host => 'ia-esds.herokuapp.com' }  
+  config.action_mailer.delivery_method = :smtp    
+  config.action_mailer.perform_deliveries = true  
+  config.action_mailer.raise_delivery_errors = false  
+  config.action_mailer.default :charset => "utf-8"  
+  config.action_mailer.smtp_settings = {  
+    address: "smtp.gmail.com",
+    port: 587,
+    domain: "ia-esds.herokuapp.com",
+    authentication: "plain",
+    enable_starttls_auto: true,
+    user_name: ENV["GMAIL_USERNAME"],
+    password: ENV["GMAIL_PASSWORD"]
+  }
+  
 end
